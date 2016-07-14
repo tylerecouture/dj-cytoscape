@@ -1,0 +1,44 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CytoScape Detail</title>
+    <style>
+    #cy {
+        width: 80%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 200px;
+    }
+    </style>
+
+
+</head>
+<body>
+<div id="cy"></div>
+
+<h1>{{ scape.name }}</h1>
+<ul>
+    <li><a href="{% url 'djcytoscape:index' %}">Home</a></li>
+    <li><a href="{% url 'djcytoscape:update' scape.id %}">Edit</a></li>
+    <li><a href="{% url 'djcytoscape:delete' scape.id %}">Delete</a></li>
+</ul>
+<ul>
+{% for element in scape.cytoelement_set.all %}
+    <li>{{ element.id }}</li>
+{% endfor %}
+</ul>
+
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="https://cdn.rawgit.com/cpettitt/dagre/v0.7.4/dist/dagre.js"></script>
+<script src="{% static 'djcytoscape/cytoscape.min.js' %}"></script>
+<script src="https://raw.githubusercontent.com/cytoscape/cytoscape.js-dagre/master/cytoscape-dagre.js"></script>
+
+<script>
+    var cy = {{ cytoscape_json|safe }}
+</script>
+
+</body>
+</html>
